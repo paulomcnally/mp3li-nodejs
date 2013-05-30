@@ -31,15 +31,15 @@ app.get('/', function(req, res){
 		request({ uri: "http://mp3.li/index.php?q="+encodeURIComponent( q ),}, function(error, response, body) {
 			var $ = cheerio.load(body, {ignoreWhitespace: true,xmlMode: false});
 
-			  // Right data
-			 $(".right_holder .block .playlist li").each(function() {
-			 	add( $, $(this) );
-			 });
+			// Right data
+			$(".right_holder .block .playlist li").each(function() {
+				add( $(this) );
+			});
 
 			 // Left data
-			 $(".left_holder .block .playlist li").each(function() {
-			  add( $, $(this) );
-			 });
+			$(".left_holder .block .playlist li").each(function() {
+				add( $(this) );
+			});
 
 			res.send( JSON.stringify(result) );
 		});
@@ -53,26 +53,26 @@ app.get('/', function(req, res){
 
 
 // Function to add object to array
-function add( ch, dom_obj ){
+function add( dom_obj ){
 	var _$ = cheerio.load(dom_obj.html());
 
 	var titles = _$(".song_title a");
 	// author
-   var artist = titles.eq(0).html();
-   // song name
-   var song = titles.eq(1).html();
-   // duration
-   var duration = _$(".duration").html();
-   // Download link
-   var link = _$(".link_holder .link_content .dl_link").attr("href");
+	var artist = titles.eq(0).html();
+	// song name
+	var song = titles.eq(1).html();
+	// duration
+	var duration = _$(".duration").html();
+	// Download link
+	var link = _$(".link_holder .link_content .dl_link").attr("href");
 
-   var obj = {};
-   obj.link = link;
-   obj.artist = artist;
-   obj.song = song;
-   obj.duration = duration;
+	var obj = {};
+	obj.link = link;
+	obj.artist = artist;
+	obj.song = song;
+	obj.duration = duration;
 
-   result.push(obj);
+	result.push(obj);
 }
 
 app.listen(80);
