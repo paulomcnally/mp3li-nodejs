@@ -75,4 +75,4 @@ function add( dom_obj ){
 	result.push(obj);
 }
 
-app.listen(80);
+app.listen(process.env.VCAP_APP_PORT || 3000);
